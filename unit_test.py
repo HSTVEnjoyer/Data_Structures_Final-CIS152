@@ -40,6 +40,29 @@ class TestBaseBuilderHelper(unittest.TestCase):
         self.assertTrue(self.builder.remove_item("TestItem"))
         self.assertEqual(self.count_items(self.builder.items), 0)
 
+    def test_add_item_invalid_quantity(self):
+        self.builder.add_item("InvalidItem", -5, 10)
+        self.assertEqual(self.count_items(self.builder.items), 0)
+
+    def test_increment_quantity_invalid_amount(self):
+        self.builder.add_item("TestItem", 5, 10)
+        self.assertFalse(self.builder.increment_quantity("TestItem", -3))
+        self.assertEqual(self.builder.items.head.item.quantity, 5)
+
+    def test_decrement_quantity_invalid_amount(self):
+        self.builder.add_item("TestItem", 5, 10)
+        self.assertFalse(self.builder.decrement_quantity("TestItem", -3))
+        self.assertEqual(self.builder.items.head.item.quantity, 5)
+
+    def test_decrement_quantity_to_negative(self):
+        self.builder.add_item("TestItem", 5, 10)
+        self.assertFalse(self.builder.decrement_quantity("TestItem", 7))
+        self.assertEqual(self.builder.items.head.item.quantity, 5)
+
+    def test_remove_nonexistent_item(self):
+        self.assertFalse(self.builder.remove_item("NonexistentItem"))
+        self.assertEqual(self.count_items(self.builder.items), 0)
+
 
 if __name__ == "__main__":
     unittest.main()

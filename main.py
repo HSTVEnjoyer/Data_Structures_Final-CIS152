@@ -39,25 +39,34 @@ if __name__ == "__main__":
         # ADD - ADD an item quantity to the desired item in the list increasing the quantity of what you have
         elif choice.upper() == 'ADD':
             item_to_increment = input("\nEnter the name of the item amount you want to add: ")
-            increment_amount = int(input("Enter the quantity to add: "))
+            increment_amount_str = input("Enter the quantity to add: ")
 
-            if increment_amount < 0:
-                print("Invalid input. Increment amount cannot be negative.")
+            try:
+                increment_amount = int(increment_amount_str)
+                if increment_amount < 0:
+                    print("Invalid input. Increment amount cannot be negative.")
+                    continue
+
+                builder.increment_quantity(item_to_increment, increment_amount)
+            except ValueError:
+                print("Invalid input. Please enter a valid integer for the quantity.")
                 continue
-
-            builder.increment_quantity(item_to_increment, increment_amount)
 
         # SUBTRACT - SUBTRACT an item quantity to the desired item in the list decreasing the quantity of what you have
         elif choice.upper() == 'SUBTRACT':
             item_to_decrement = input("\nEnter the name of the item amount you want to subtract: ")
-            decrement_amount = int(input("Enter the quantity to subtract: "))
+            decrement_amount_str = input("Enter the quantity to subtract: ")
 
-            if decrement_amount < 0:
-                print("Error: Decrement amount cannot be negative.")
+            try:
+                decrement_amount = int(decrement_amount_str)
+                if decrement_amount < 0:
+                    print("Invalid input. Decrement amount cannot be negative.")
+                    continue
+
+                builder.decrement_quantity(item_to_decrement, decrement_amount)
+            except ValueError:
+                print("Invalid input. Please enter a valid integer for the quantity.")
                 continue
-
-            builder.decrement_quantity(item_to_decrement, decrement_amount)
-
 
         # DISPLAY - DISPLAY simply shows every item in the list
         elif choice.upper() == 'DISPLAY':

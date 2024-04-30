@@ -98,6 +98,8 @@ class BaseBuilderHelper:
         while current:
             if current.item.name == item_name:
                 try:
+                    if amount < 0:
+                        raise ValueError("Increment amount cannot be negative.")
                     total_quantity = int(current.item.total_quantity)
                     current_quantity = int(current.item.quantity)
                     if current_quantity + amount <= total_quantity:
@@ -118,6 +120,8 @@ class BaseBuilderHelper:
         while current:
             if current.item.name == item_name:
                 try:
+                    if amount < 0:
+                        raise ValueError("Decrement amount cannot be negative.")
                     if current.item.quantity - amount < 0:
                         raise ValueError("Quantity cannot be negative.")
                     current.item.quantity -= amount
